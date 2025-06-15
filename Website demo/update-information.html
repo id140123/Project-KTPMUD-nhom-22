@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Update Information</title>
+  <style>
+    body {
+      background: #CCFFCC;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+    }
+    .container {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      width: 500px;
+      background: #ffde59;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    .formbg {
+      width: 100%;
+      background: #ffde59;
+      margin-top: 0px;
+      margin-bottom: 20px;
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+    .logo img {
+        width: 200px;        
+        height: auto;        
+        display: block;      
+        margin: 0 auto;      
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #000000;
+    }
+    input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #000000;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 18px;
+      background: #7ed957;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    input[readonly], input[disabled] {
+      background: #eee;
+      color: #888;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="formbg">
+      <div class="logo"> <img src="imagine/HiStaff.jpg" alt="ảnh logo" />
+        <form id="updateForm">
+          <label for="username">User name</label>
+          <input type="text" id="username" />
+
+          <label for="email">Email</label>
+          <input type="text" id="email" readonly />
+
+          <label for="dateofbirth">Date of birth</label>
+          <input type="date" id="dateofbirth" />
+
+          <label for="role">Role</label>
+          <input type="text" id="role" readonly />
+
+          <label for="salary">Salary</label>
+          <input type="text" id="salary" readonly />
+
+          <label for="welfares">Welfares</label>
+          <input type="text" id="welfares" readonly />
+
+          <label for="violations">Violations</label>
+          <input type="text" id="violations" readonly />
+
+          <label for="password">New Password</label>
+          <input type="password" id="password" placeholder="Leave blank to keep current password" />
+
+          <label for="confirmpassword">Confirm New Password</label>
+          <input type="password" id="confirmpassword" placeholder="Leave blank to keep current password" />
+
+          <button type="submit">Confirm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Lấy dữ liệu user hiện tại và điền vào form
+    window.onload = function() {
+      var email = localStorage.getItem("currentUser");
+      if (!email) {
+        window.location.href = "signin.html";
+        return;
+      }
+      var userData = localStorage.getItem(email);
+      if (!userData) {
+        window.location.href = "signin.html";
+        return;
+      }
+      var user = JSON.parse(userData);
+      document.getElementById("username").value = user.username || "";
+      document.getElementById("email").value = user.email || "";
+      document.getElementById("dateofbirth").value = user.dateofbirth || "";
+      document.getElementById("role").value = user.role || "";
+      document.getElementById("salary").value = user.salary !== undefined ? user.salary : "";
+      document.getElementById("welfares").value = user.welfares !== undefined ? user.welfares : "";
+      document.getElementById("violations").value = user.violations !== undefined ? user.violations : "";
+    };
+
+    document.getElementById("updateForm").onsubmit = function(event) {
+      event.preventDefault();
+      var email = localStorage.getItem("currentUser");
+      var userData = localStorage.getItem(email);
+      if (!userData) return;
+      var user = JSON.parse(userData);
+      var username = document.getElementById("username").value.trim();
+      var dateofbirth = document.getElementById("dateofbirth").value;
+      var password = document.getElementById("password").value;
+      var confirmpassword = document.getElementById("confirmpassword").value;
+      if (!username || !dateofbirth) {
+        alert("User name và Date of birth không được để trống!");
+        return;
+      }
+      if (password || confirmpassword) {
+        if (password !== confirmpassword) {
+          alert("Mật khẩu xác nhận không khớp!");
+          return;
+        }
+        user.password = password;
+      }
+      user.username = username;
+      user.dateofbirth = dateofbirth;
+      localStorage.setItem(email, JSON.stringify(user));
+      alert("Cập nhật thông tin thành công!");
+      window.location.href = "employee.html";
+    };
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employee</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .left {
+      width: 200px;
+      background: #ffde59;
+      height: 100vh;
+      padding-top: 0;
+      padding-left: 35px;
+      padding-right: 35px;
+      padding-bottom: 20px;
+    }
+
+    .logo img {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .left ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .left ul li {
+      font-size: 14px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .right {
+      background: white;
+      flex-grow: 1;
+      padding: 20px 80px 20px 80px;
+    }
+
+    .righttop {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+    }
+
+    .righttop img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+
+    .rightbottom {
+      padding: 25px;
+    }
+
+    .rightbottom h2 {
+      font-size: 25px;
+      color: black;
+      text-align: center;
+    }
+
+    .rightbottom-info {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 10px 0px;
+      align-items: center;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .rightbottom-info .label {
+      font-weight: bold;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<script>
+  window.onload = function() {
+    var email = localStorage.getItem("currentUser");
+    if (email) {
+      var userData = localStorage.getItem(email);
+      if (userData) {
+        var user = JSON.parse(userData);
+        document.getElementById("employee-username").textContent = user.username || "";
+        document.getElementById("employee-username-info").textContent = user.username || "";
+        document.getElementById("employee-id").textContent = user.id || "";
+        document.getElementById("employee-email").textContent = user.email || "";
+        document.getElementById("employee-dob").textContent = user.dateofbirth || "";
+        document.getElementById("employee-role").textContent = user.role || "";
+        document.getElementById("employee-salary").textContent = user.salary !== undefined ? user.salary : "";
+        document.getElementById("employee-welfares").textContent = user.welfares !== undefined ? user.welfares : "";
+        document.getElementById("employee-welfare-list").textContent = Array.isArray(user.welfare) && user.welfare.length > 0
+          ? user.welfare.join(", ")
+          : "Không có phúc lợi nào";
+        document.getElementById("employee-violations").textContent = user.violations !== undefined ? user.violations : "";
+        document.getElementById("employee-violation-list").textContent = Array.isArray(user.violation) && user.violation.length > 0
+          ? user.violation.join(", ")
+          : "Không có lỗi nào";
+      }
+    }
+  }
+</script>
+
+<body>
+  <div class="container">
+    <div class="left">
+      <div class="logo"> <img src="imagine/HiStaff.jpg" alt="ảnh logo" />
+      <ul>
+        <li style="font-weight:bold;">Home</li>
+        <li>Update Information</li>
+        <li>Attendance</li>
+        <li>Leave Request</li>
+        <li>Settings</li>
+        <li id="logout-btn">Logout</li>
+      </ul>
+      </div>
+    </div>
+    <div class="right">
+      <div class="righttop">
+        <div style="text-align: center;">
+          <img src="imagine/avatar.jpg" alt="avatar" />
+          <br />
+          <button style="margin-top: 6px; border-radius: 5px; border-width: 1px; cursor: pointer;">Change Avatar</button>
+        </div>
+        <div>
+          <h2 id="employee-username">User Name</h2>
+          <p>ID: <span id="employee-id"></span></p>
+        </div>
+      </div>
+      <div class="rightbottom">
+        <h2>Information</h2>
+        <div class="rightbottom-info">
+          <div class="label">User Name:</div>
+          <div id="employee-username-info"></div>
+          <div class="label">Email:</div>
+          <div id="employee-email"></div>
+          <div class="label">Date of birth:</div>
+          <div id="employee-dob"></div>
+          <div class="label">Role:</div>
+          <div id="employee-role"></div>
+          <div class="label">Salary:</div>
+          <div id="employee-salary"></div>
+          <div class="label">Welfares:</div>
+          <div id="employee-welfares"></div>
+          <div class="label">Welfare List:</div>
+          <div id="employee-welfare-list"></div>
+          <div class="label">Violations:</div>
+          <div id="employee-violations"></div>
+          <div class="label">Violation List:</div>
+          <div id="employee-violation-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Home
+    document.querySelectorAll('.left ul li')[0].onclick = function() {
+      window.location.href = "manager.html";
+    }
+
+    // Update Information
+    document.querySelectorAll('.left ul li')[1].onclick = function() {
+      window.location.href = "update-information.html";
+    }
+
+    // Log out
+    document.getElementById("logout-btn").onclick = function() {
+      localStorage.removeItem("currentUser");
+      window.location.href = "signin.html";
+    }
+  </script>
+</body>
+
+</html>

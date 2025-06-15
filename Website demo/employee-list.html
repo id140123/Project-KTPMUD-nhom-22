@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employee List</title>
+  <style>
+    body { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; background: #ffffff; }
+    .container { display: flex; }
+    .left {
+      width: 200px;
+      background: #ffde59;
+      height: 100vh;
+      padding-top: 0;
+      padding-left: 35px;
+      padding-right: 35px;
+      padding-bottom: 20px;
+    }
+    .logo img {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .left ul { list-style: none; padding: 0; }
+    .left ul li { font-size: 14px; padding: 10px; cursor: pointer; }
+    .right { background: white; flex-grow: 1; padding: 20px 80px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 40px; }
+    th, td { border: 1px solid black; padding: 10px; text-align: center; }
+    th { background: #ffde59; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="left">
+      <div class="logo"> <img src="imagine/HiStaff.jpg" alt="ảnh logo" />
+      <ul>
+        <li>Home</li>
+        <li style="font-weight:bold;">Employee List</li>
+        <li>Add/Remove Employee</li>
+        <li>Update Salary/Benefits</li>
+        <li>Update Violation</li>
+        <li>Update Working Day</li>
+        <li>Evaluate Performance</li>
+        <li>Approve Request</li>
+        <li>Settings</li>
+        <li id="logout-btn">Logout</li>
+      </ul>
+      </div>
+    </div>
+    <div class="right">
+      <h2 style="text-align:center;">Employee List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Date of Birth</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody id="employee-table-body">
+          <!-- Data will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    // Hien thi danh sach nhan vien
+    function getEmployeeIdNumber(id) {
+      // Chuyen doi id thanh so nguyen
+      // Loai bo cac ky tu khong phai so
+      return parseInt(id.replace(/\D/g, ''), 10);
+    }
+    window.onload = function() {
+      var employees = [];
+      for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        try {
+          var user = JSON.parse(localStorage.getItem(key));
+          if (user && user.role === "employee") {
+            employees.push(user);
+          }
+        } catch (e) {}
+      }
+      // Sap xep theo id tang dan
+      employees.sort(function(a, b) {
+        return getEmployeeIdNumber(a.id) - getEmployeeIdNumber(b.id);
+      });
+      var tbody = document.getElementById('employee-table-body');
+      employees.forEach(function(user) {
+        var tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${user.id || ""}</td>
+          <td>${user.username || ""}</td>
+          <td>${user.email || ""}</td>
+          <td>${user.dateofbirth || ""}</td>
+          <td>${user.role || ""}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }  
+    // Home
+    document.querySelectorAll('.left ul li')[0].onclick = function() {
+      window.location.href = "manager.html";
+    }
+
+    // Add/Remove Employee
+    document.querySelectorAll('.left ul li')[2].onclick = function() {
+      window.location.href = "add-remove-employee.html";
+    }
+
+    // Logout
+    document.getElementById("logout-btn").onclick = function() {
+      localStorage.removeItem("currentUser");
+      window.location.href = "signin.html";
+    }
+  </script>
+</body>
+
+</html>

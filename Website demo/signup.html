@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #CCFFCC;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      width: 500px;
+      background: #ffde59;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .formbg {
+      width: 100%;
+      background: #ffde59;
+      margin-top: 0px;
+      margin-bottom: 20px;
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+
+    .logo img {
+        width: 200px;        
+        height: auto;        
+        display: block;      
+        margin: 0 auto;      
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #000000;
+    }
+
+    input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #000000;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 18px;
+      background: #7ed957;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    select#role {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #000000;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="formbg">
+      <div class="logo"> <img src="imagine/HiStaff.jpg" alt="ảnh logo" />
+        <form onsubmit="signup(event)">
+          <label for="username">User name</label>
+          <input type="text" id="username" placeholder="vuminhduc" />
+
+          <label for="email">Email</label>
+          <input type="text" id="email" placeholder="vuminhduc@gmail.com" />
+
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="*********" />
+
+          <label for="confirmpassword"> Confirm password</label>
+          <input type="password" id="confirmpassword" placeholder="*********" />
+
+          <label for="dateofbirth">Date of birth</label>
+          <input type="date" id="dateofbirth" />
+          
+          <label for="role">Role</label>
+          <select id="role" required>
+            <option value="">-- Select role --</option>
+            <option value="employee">Employee</option>
+            <option value="manager">Manager</option>
+          </select>
+
+          <button id="btnSignup" class="btn">Sign up</button>
+
+        </form> 
+      </div>
+    </div>
+    <script src="./main.js"></script>
+  </div>
+</body>
+
+</html>
