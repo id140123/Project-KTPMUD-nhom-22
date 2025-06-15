@@ -1,2 +1,1 @@
-# project-KTPMUD nhóm 22
-tổng hợp file project KTPMUD
+# Project KTPMUD nhóm 22: Hệ thống quản lí nhân sự
